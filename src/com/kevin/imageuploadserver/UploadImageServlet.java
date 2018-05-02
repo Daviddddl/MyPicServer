@@ -18,7 +18,7 @@ import org.apache.commons.io.FilenameUtils;
 
 public class UploadImageServlet extends HttpServlet {
 
-	static String bashCommand = "pwd";
+	static String bashCommand = "/home/suheng/caffe/examples/HWDB_AD/control/picService.sh";
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
