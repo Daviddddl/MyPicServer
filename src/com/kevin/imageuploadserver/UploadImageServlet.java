@@ -1,7 +1,9 @@
 package com.kevin.imageuploadserver;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,6 +17,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 
 public class UploadImageServlet extends HttpServlet {
+
+	static String bashCommand = "pwd";
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -23,6 +27,31 @@ public class UploadImageServlet extends HttpServlet {
 		uploadImage(request, response);
 //		接收图片与用户Id
 //		changeUserImage(request, response);
+		//将图片转移并重命名
+		try {
+			moveAndRename();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void moveAndRename() throws InterruptedException, IOException {
+
+		Runtime runtime = Runtime.getRuntime();
+		Process pro = runtime.exec(bashCommand);
+		int status = pro.waitFor();
+		if (status != 0)
+			System.out.println("Failed to call shell's command ");
+		BufferedReader br = new BufferedReader(new InputStreamReader(pro.getInputStream()));
+		StringBuffer strbr = new StringBuffer();
+		String line;
+		while ((line = br.readLine())!= null)
+		{
+			strbr.append(line).append("\n");
+		}
+
+		String result = strbr.toString();
+		System.out.println(result);
 	}
 
 	// 上传图片文件
