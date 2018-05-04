@@ -25,8 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<input type="submit" value="submit" />
     </form>
 
-    <form action="${pageContext.request.contextPath}/RegisterServlet" method="post"
-          enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/RegisterServlet" method="post">
         tag:<input type="text" name="tag"/><br/>
         name:<input type="text" name="name"/><br/>
         email:<input type="text" name="email"/><br/>

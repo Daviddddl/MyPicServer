@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # 先将指定文件夹中的文件删除
 rm -rf /home/suheng/caffe/examples/HWDB_AD/origin/*
 
