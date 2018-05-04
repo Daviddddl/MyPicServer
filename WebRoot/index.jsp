@@ -24,6 +24,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	image:<input type="file" name="image" value="" /><br/>
     	<input type="submit" value="submit" />
     </form>
+
+    <form action="${pageContext.request.contextPath}/RegisterServlet" method="post"
+          enctype="multipart/form-data">
+        tag:<input type="text" name="tag"/><br/>
+        name:<input type="text" name="name"/><br/>
+        email:<input type="text" name="email"/><br/>
+        password:<input type="text" name="password"/><br/>
+
+        <input type="submit" value="submit" />
+    </form>
     
     <hr>
   </body>

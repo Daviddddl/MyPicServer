@@ -4,6 +4,11 @@
     <root id="archive" name="ImageUploadServer_war.war">
       <element id="artifact" artifact-name="ImageUploadServer:war exploded" />
       <element id="module-output" name="ImageUploadServer" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="commons-beanutils-1.8.0" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

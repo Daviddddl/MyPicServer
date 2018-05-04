@@ -202,11 +202,11 @@ public class DBManager {
 
     public static void main(String[] args) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", "liwshuo");
-        jsonObject.put("email", "email8");
+        jsonObject.put("name", "test002");
+        jsonObject.put("email", "email002");
         jsonObject.put("password", "password");
         DBManager dbManager = new DBManager();
         dbManager.storeUser(jsonObject);
-        System.out.println(dbManager.getUserByEmailAndPassword("email8", "password"));
+        System.out.println(dbManager.getUserByEmailAndPassword("email002", "password"));
     }
 }

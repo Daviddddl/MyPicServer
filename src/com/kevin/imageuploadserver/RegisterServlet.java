@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**处理注册请求
- * Created by shuo on 2015/4/9.
+/**
+ * 处理注册请求
  */
 @WebServlet(name = "RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -57,6 +57,5 @@ public class RegisterServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

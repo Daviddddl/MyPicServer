@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 
 /**
  * 处理登陆请求
- * Created by shuo on 2015/4/7.
  */
 @WebServlet(name = "LoginServlet")
 public class LoginServlet extends HttpServlet {
