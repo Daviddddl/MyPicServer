@@ -12,7 +12,6 @@ import java.util.UUID;
 
 /**
  * 数据库管理功能
- * Created by shuo on 2015/4/7.
  */
 public class DBManager {
 
