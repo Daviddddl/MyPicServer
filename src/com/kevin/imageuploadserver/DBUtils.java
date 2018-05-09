@@ -1,4 +1,3 @@
-
 package com.kevin.imageuploadserver;
 import java.sql.*;
 import java.util.HashMap;
