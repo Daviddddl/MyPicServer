@@ -99,9 +99,9 @@ public class FunctionServlet extends HttpServlet {
                 File recoMore = new File(storeDirectory, "re_more.png");
                 if (recoMore.exists()){
                     result = recoMore();
-                    response.getWriter().print("error");
+                    response.getWriter().print(result);
                 }else{
-                    response.getWriter().print("error");
+                    response.getWriter().print("error: file re_more.png not exists");
                 }
                 break;
         }

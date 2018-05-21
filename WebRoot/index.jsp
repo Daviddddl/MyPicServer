@@ -35,6 +35,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <input type="submit" value="submit" />
     </form>
 
+    <form action="${pageContext.request.contextPath}/LoginServlet" method="post">
+        tag:<input type="text" name="tag"/><br/>
+        email:<input type="text" name="email"/><br/>
+        password:<input type="text" name="password"/><br/>
+
+        <input type="submit" value="submit" />
+    </form>
+
 
     <form action="${pageContext.request.contextPath}/FunctionServlet" method="post">
         function:<input type="text" name="function" value="repair" /><br/>
