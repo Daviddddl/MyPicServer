@@ -45,8 +45,9 @@ public class UploadImageServlet extends HttpServlet {
 
 	private String moveAndRename() throws InterruptedException, IOException {
 
+		String repairBash = "";
 		Runtime runtime = Runtime.getRuntime();
-		Process pro = runtime.exec("");
+		Process pro = runtime.exec(repairBash);
 		int status = pro.waitFor();
 		if (status != 0){
 		    //脚本执行出错
@@ -72,7 +73,7 @@ public class UploadImageServlet extends HttpServlet {
 	// 上传图片文件
 	private void uploadImage(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		String message = "";
+		String message = "error";
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("UTF-8");
@@ -108,10 +109,11 @@ public class UploadImageServlet extends HttpServlet {
 			try {
 			    if (wantedFilename == null || "".equals(wantedFilename))
 			        wantedFilename = filename;
+				System.out.println(wantedFilename);
                 imageFileitem.write(new File(storeDirectory, wantedFilename));
 
 				String filePath = "/files/images/" + wantedFilename;
-				message = filePath;
+				message = "success";
 			} catch (Exception e) {
 			    e.printStackTrace();
 				message = "error: upload file exception";
@@ -189,8 +191,8 @@ public class UploadImageServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
-//        uploadImage(request, response);
+//		doGet(request, response);
+        uploadImage(request, response);
 	}
 
 
