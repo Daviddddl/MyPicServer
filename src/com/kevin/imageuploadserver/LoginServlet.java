@@ -20,12 +20,13 @@ public class LoginServlet extends HttpServlet {
         DBManager dbManager = new DBManager();
         JSONObject result = new JSONObject();
         result.put("tag", tag);
-        System.out.println(tag);
+        System.out.println("tag:" + tag);
 
         if (tag.equals("login")) {
             String email = request.getParameter("email");//从请求中取出邮箱
             String password = request.getParameter("password");//从请求中取出密码
             JSONObject validUser = dbManager.getUserByEmailAndPassword(email, password);//通过邮箱和密码获取用户的信息，如果不存在则为null
+            System.out.println(validUser);
             if (validUser != null) {
                 result.put("user", validUser);
                 result.put("error", false);
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             result.put("error", true);
             result.put("error_msg", "tag必须是login或register");
         }
-        System.out.println(result.get("error_msg"));
+        System.out.println("error msg: " + result.get("error_msg"));
         //设置response的格式并写入返回信息
         response.setContentType("text/html; charset=utf-8");
         PrintWriter printWriter = response.getWriter();
