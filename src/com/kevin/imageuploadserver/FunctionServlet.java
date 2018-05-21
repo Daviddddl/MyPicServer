@@ -51,7 +51,7 @@ public class FunctionServlet extends HttpServlet {
 //        System.out.println(new String(args1.getBytes("iso8859-1"), "UTF-8"));
 //        System.out.println(new String("哈哈哈".getBytes("ISO-8859-1"), "utf-8"));
         String result = "error";
-        
+
         switch (function){
             case "repair_step1":
                 //残损修复
@@ -181,7 +181,7 @@ public class FunctionServlet extends HttpServlet {
         }
 
     }
-    
+
     private String identify(){
         String res = "error";
         Runtime runtime = Runtime.getRuntime();
@@ -207,7 +207,7 @@ public class FunctionServlet extends HttpServlet {
             return res;
         }
     }
-    
+
     private String imitate(String style, String text){
         String res = "error";
         try {
@@ -242,7 +242,7 @@ public class FunctionServlet extends HttpServlet {
             return res;
         }
     }
-    
+
     private String recoSingle(){
         String res = "error";
         Runtime runtime = Runtime.getRuntime();
