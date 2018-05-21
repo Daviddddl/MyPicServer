@@ -15,6 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
+      <meta charset="utf-8"/>
   </head>
   
   <body>
@@ -31,6 +32,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         email:<input type="text" name="email"/><br/>
         password:<input type="text" name="password"/><br/>
 
+        <input type="submit" value="submit" />
+    </form>
+
+
+    <form action="${pageContext.request.contextPath}/FunctionServlet" method="post">
+        function:<input type="text" name="function" value="repair" /><br/>
+        args1:<input type="text" name="args1" value="repair" /><br/>
+        args2:<input type="text" name="args2" value="哈" /><br/>
+        args3:<input type="text" name="args3" value="a" /><br/>
+        args4:<input type="text" name="args4" value="s" /><br/>
         <input type="submit" value="submit" />
     </form>
     
