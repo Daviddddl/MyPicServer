@@ -72,7 +72,7 @@ public class UploadImageServlet extends HttpServlet {
 
 	// 上传图片文件
 	private void uploadImage(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
+			throws IOException {
 		String message = "error";
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
@@ -86,8 +86,8 @@ public class UploadImageServlet extends HttpServlet {
             FileItem imageFileitem = null;
 			for (FileItem fileItem: items){
 			    if ("wantedFilename".equals(fileItem.getFieldName())){
-			        wantedFilename = new String(fileItem.getString().getBytes("ISO-8859-1"), "UTF-8");
-                    System.out.println("wantedFilename: "+wantedFilename);
+			        wantedFilename = new String(fileItem.getString().getBytes("UTF-8"), "UTF-8");
+//                    System.out.println("wantedFilename: "+wantedFilename);
                 }else if ("image".equals(fileItem.getFieldName())){
 			        imageFileitem = fileItem;
                 }
@@ -109,11 +109,11 @@ public class UploadImageServlet extends HttpServlet {
 			try {
 			    if (wantedFilename == null || "".equals(wantedFilename))
 			        wantedFilename = filename;
-				System.out.println(wantedFilename);
+				System.out.println("wantedFilename: " + wantedFilename);
                 imageFileitem.write(new File(storeDirectory, wantedFilename));
-
+				System.out.println("finish "+wantedFilename);
 				String filePath = "/files/images/" + wantedFilename;
-				message = "success";
+				message = filePath;
 			} catch (Exception e) {
 			    e.printStackTrace();
 				message = "error: upload file exception";

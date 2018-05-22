@@ -42,7 +42,8 @@ public class FunctionServlet extends HttpServlet {
         String args2 = request.getParameter("args2");
         String args3 = request.getParameter("args3");
         String args4 = request.getParameter("args4");
-//
+
+        System.out.println("function: " + function + ", args1: " + args1 + ", args2: " + args2 + ", args3: " + args3 + ", args4: " + args4);
 //        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("/Users/kewenkang/Downloads/1.txt")), "utf-8"));
 //        bw.write(args2);
 //        bw.flush();
@@ -57,6 +58,7 @@ public class FunctionServlet extends HttpServlet {
                 //残损修复
                 File fixOrigin = new File(storeDirectory, "fix_origin.png");
                 if (fixOrigin.exists()){
+                    System.out.println("execute repair step1...");
                     result = repairStep1();  // 风格，选择的字, 手动输入
                     response.getWriter().print(result);
                 }else{
@@ -70,8 +72,8 @@ public class FunctionServlet extends HttpServlet {
                 break;
             case "identify":
                 //笔迹鉴定
-                File imageLeft = new File(storeDirectory, "identityLeft.png");
-                File imageRight = new File(storeDirectory, "identityRight.png");
+                File imageLeft = new File(storeDirectory, "identifyLeft.png");
+                File imageRight = new File(storeDirectory, "identifyRight.png");
                 if (imageLeft.exists() && imageRight.exists()){
                     result = identify();
                     response.getWriter().print(result);
@@ -86,7 +88,7 @@ public class FunctionServlet extends HttpServlet {
                 break;
             case "recoSingle":
                 //手写识别
-                File recoSingle = new File(storeDirectory, "re_single.png");
+                File recoSingle = new File(storeDirectory, "manufacture.png");
                 if (recoSingle.exists()){
                     result = recoSingle();
                     response.getWriter().print(result);
@@ -96,7 +98,7 @@ public class FunctionServlet extends HttpServlet {
                 break;
             case "recoMore":
                 //手写识别
-                File recoMore = new File(storeDirectory, "re_more.png");
+                File recoMore = new File(storeDirectory, "manufacture.png");
                 if (recoMore.exists()){
                     result = recoMore();
                     response.getWriter().print(result);
@@ -115,12 +117,12 @@ public class FunctionServlet extends HttpServlet {
         String res = "error";
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(prefixPath + "/cache/fix/fix_sel/select.txt")), "utf-8"));
-            bw.write(style);
+            bw.write(charactor);
             bw.flush();
             bw.close();
 
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(prefixPath + "/cache/x.txt")), "utf-8"));
-            bw.write(charactor);
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(prefixPath + "/cache/fix/fix_font/font.txt")), "utf-8"));
+            bw.write(style);
             bw.flush();
             bw.close();
 
@@ -128,7 +130,7 @@ public class FunctionServlet extends HttpServlet {
             Process pro = null;
             int status;
 
-            pro = runtime.exec(repairBash2);
+            pro = runtime.exec("bash " + repairBash2);
             status = pro.waitFor();
             if (status != 0){
                 //脚本执行出错
@@ -153,7 +155,8 @@ public class FunctionServlet extends HttpServlet {
         String res = "error";
         int status;
         try {
-            pro = runtime.exec(repairBash1);
+            pro = runtime.exec("bash " + repairBash1);
+//            pro = runtime.exec("bash " + repairBash1);
             status = pro.waitFor();
             if (status != 0){
                 //脚本执行出错
@@ -161,16 +164,25 @@ public class FunctionServlet extends HttpServlet {
 
             }else{
                 //脚本执行成功
-                BufferedReader br = new BufferedReader(new InputStreamReader(pro.getInputStream()));
-                StringBuffer strbr = new StringBuffer();
+//                BufferedReader br = new BufferedReader(new InputStreamReader(pro.getInputStream()));
+//                StringBuffer strbr = new StringBuffer();
+//                String line;
+//                while ((line = br.readLine())!= null)
+//                {
+//                    strbr.append(line).append("\n");
+//                }
+//
+//                String result = strbr.toString();
+                System.out.println("read infer text...");
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(prefixPath, "output/fix/infer_txt/infer.txt")), "UTF-8"));
+//                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("/Users/kewenkang/Downloads/infer.txt")), "UTF-8"));
+                StringBuffer sb = new StringBuffer();
                 String line;
-                while ((line = br.readLine())!= null)
-                {
-                    strbr.append(line).append("\n");
+                while ((line = br.readLine()) != null){
+                    sb.append(line);
                 }
-
-                String result = strbr.toString();
-                res = "success";
+                res = sb.toString();
+                System.out.println("repair text result: " + new String(res.getBytes("UTF-8"), "ISO8859-1"));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,7 +201,7 @@ public class FunctionServlet extends HttpServlet {
         int status;
 
         try {
-            pro = runtime.exec(identityBash);
+            pro = runtime.exec("bash " + identityBash);
             status = pro.waitFor();
             if (status != 0){
                 //脚本执行出错
@@ -212,11 +224,13 @@ public class FunctionServlet extends HttpServlet {
         String res = "error";
         try {
             // 将风格数字写到文件中
+//            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("/Users/kewenkang/Downloads/font.txt")), "utf-8"));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(prefixPath+"/cache/trans/trans_sel/font.txt")), "utf-8"));
             bw.write(style);
             bw.flush();
 
             // 将文本写入文件中
+//            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("/Users/kewenkang/Downloads/ori_text.txt")), "utf-8"));
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(prefixPath+"/cache/trans/text/ori_text.txt")), "utf-8"));
             bw.write(text);
             bw.flush();
@@ -226,13 +240,12 @@ public class FunctionServlet extends HttpServlet {
             int status;
 
             // 执行风格模仿脚本
-            pro = runtime.exec(imitateBash);
+            pro = runtime.exec("bash " + imitateBash);
             status = pro.waitFor();
             if (status != 0){
                 //脚本执行出错
                 System.out.println("Failed to call shell's command ");
             }else{
-
                 res = "success";
             }
 
@@ -250,7 +263,7 @@ public class FunctionServlet extends HttpServlet {
         int status;
 
         try {
-            pro = runtime.exec(recoBashSingle);
+            pro = runtime.exec("bash " + recoBashSingle);
             status = pro.waitFor();
             if (status != 0){
                 //脚本执行出错
@@ -275,7 +288,7 @@ public class FunctionServlet extends HttpServlet {
         int status;
 
         try {
-            pro = runtime.exec(recoBashMore);
+            pro = runtime.exec("bash " + recoBashMore);
             status = pro.waitFor();
             if (status != 0){
                 //脚本执行出错
